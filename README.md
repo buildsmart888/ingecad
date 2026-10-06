@@ -1,5 +1,27 @@
 # IngeCAD
 
+## Windows AI + MCP bundle (community fork)
+
+This fork adds a Windows x64 offline installer with IngeCAD 0.6.5, an application-local
+Python runtime, patched LibreDWG converters, and IngeCAD AI + MCP 0.3.1.
+It creates per-user Desktop/Start Menu shortcuts and machine-specific MCP setup examples.
+
+**[Download the Windows installer](https://github.com/buildsmart888/ingecad/releases/tag/v0.6.5-ai-mcp-0.3.1)** ·
+[Thai installation guide](windows-bundle/README-TH.txt) · [AI/MCP documentation](ingecad-mcp/README.md) ·
+[Build instructions](windows-bundle/BUILD.txt)
+
+The native AI sidebar includes seven provider presets, protected key storage, model discovery,
+connection testing, chat/photo/viewport inputs, CAD tool calls and a copyable MCP setup guide.
+The external MCP server exposes 19 tools through stdio; provider credentials are configured
+in the AI client separately. The installer does not contain API keys or overwrite client configs.
+
+Verified with a separate installation directory on the development Windows machine:
+runtime imports, shortcuts, generated paths, native Qt/CAD, real stdio MCP calls,
+Thai-path DWG roundtrip, A3/PDF export and uninstall preserving a user-owned drawing fixture.
+The installer is unsigned; a clean second Windows machine has not yet been tested.
+This is a community Windows build, separate from upstream's official Linux packaging.
+The upstream documentation follows below.
+
 **[ingecad.org](https://ingecad.org)** · CAD 2D libre para Linux, con DWG de fábrica.
 
 **Free 2D CAD for Linux, in the spirit of classic AutoCAD.**
