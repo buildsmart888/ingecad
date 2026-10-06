@@ -24,7 +24,14 @@ def endpoint():
                 self.send_header("Location", f"http://127.0.0.1:{self.server.server_port}/leak")
                 self.end_headers()
                 return
-            status, value = (401, {"error": {"message": "invalid key fixture-secret"}}) if self.path.startswith("/error") else (200, {"data":[{"id":"b"},{"id":"a"},{"id":"a"}]})
+            if self.path.startswith("/array-error"):
+                status, value = 400, [{"error":{"code":400,"message":"Invalid model fixture-secret","status":"INVALID_ARGUMENT"}}]
+            elif self.path.startswith("/array-success"):
+                status, value = 200, [{"error":{"message":"Unexpected fixture-secret"}}]
+            elif self.path.startswith("/gemini"):
+                status, value = 200, {"data":[{"id":"models/gemini-fixture"}]}
+            else:
+                status, value = (401, {"error": {"message": "invalid key fixture-secret"}}) if self.path.startswith("/error") else (200, {"data":[{"id":"b"},{"id":"a"},{"id":"a"}]})
             self.send_response(status)
             self.send_header("Content-Type", "application/json")
             self.end_headers()
@@ -63,6 +70,30 @@ def test_redirect_does_not_forward_key(endpoint):
     with pytest.raises(RuntimeError, match="302"):
         providers.Provider("Groq",base+"/redirect","fixture-secret").models()
     assert state["requests"] == ["/redirect/models"]
+
+
+def test_google_array_http_error_reports_original_status_and_message(endpoint):
+    base, _ = endpoint
+    with pytest.raises(RuntimeError) as caught:
+        providers.Provider("Google Gemini", base+"/array-error", "fixture-secret").models()
+    message = str(caught.value)
+    assert "HTTP 400" in message and "Invalid model" in message
+    assert "fixture-secret" not in message and "[redacted]" in message
+    assert "has no attribute" not in message
+
+
+def test_nonobject_success_response_has_readable_error(endpoint):
+    base, _ = endpoint
+    with pytest.raises(RuntimeError, match="unexpected response"):
+        providers.Provider("Google Gemini", base+"/array-success").models()
+
+
+def test_gemini_models_prefix_removed_from_discovery_and_chat(endpoint):
+    base, state = endpoint
+    provider = providers.Provider("Google Gemini", base+"/gemini", "fixture-secret")
+    assert provider.models() == ["gemini-fixture"]
+    provider.chat("models/gemini-fixture", [{"role":"user","content":"test"}], [])
+    assert state["payload"]["model"] == "gemini-fixture"
 
 
 @pytest.mark.parametrize("key", ["secret\nleak", "secret value", "秘密", "a"*2561])

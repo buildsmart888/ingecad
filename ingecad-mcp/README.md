@@ -1,4 +1,10 @@
-# IngeCAD AI + MCP 0.3.1
+# IngeCAD AI + MCP 0.3.2
+
+รุ่น 0.3.2 แก้ตัวอ่าน error จากบริการ AI ที่ส่ง JSON เป็น array ซึ่งเดิมแสดง
+`'list' object has no attribute 'get'` แทน HTTP status และข้อความต้นเหตุ
+และปรับ Google Gemini ให้ตัด `models/` จากชื่อโมเดลก่อนส่งคำขอ
+ผ่าน 28 unit tests และ GUI/CAD protocol fixtures; ยังไม่ได้ยืนยันคำขอจริงของเครื่องที่แจ้งปัญหา
+ผู้ใช้ชุดติดตั้ง Windows 0.3.1 ใช้แพตช์ใน Release 0.3.2 ได้ โดยปิดโปรแกรมก่อนรัน UPDATE.cmd
 
 ปลั๊กอินเชื่อม IngeCAD 0.6.5 กับ AI client ที่รองรับ Model Context Protocol (MCP)
 มี MCP server แยกจากโปรแกรม และปลั๊กอินใน IngeCAD สำหรับทำงานบน GUI thread

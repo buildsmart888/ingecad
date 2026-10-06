@@ -30,6 +30,23 @@ def valid_url(base):
     return base.rstrip("/")
 
 
+def error_message(value):
+    """Google gateways may wrap HTTP errors in an array, not an object."""
+    if isinstance(value, list):
+        return "; ".join(error_message(item) for item in value)
+    if isinstance(value, dict):
+        if "error" in value:
+            return error_message(value["error"])
+        if "message" in value:
+            return str(value["message"])
+        return json.dumps(value, ensure_ascii=False)
+    return str(value)
+
+
+def gemini_model(model):
+    return model.removeprefix("models/")
+
+
 class Provider:
     def __init__(self, name, base, key="", protocol=None):
         if len(key) > 2560 or any(ord(c) < 33 or ord(c) > 126 for c in key):
@@ -38,7 +55,7 @@ class Provider:
         self.protocol = protocol or PROVIDERS[name][1]
 
     def request(self, path, payload=None):
-        headers = {"Accept": "application/json", "Content-Type": "application/json", "User-Agent": "IngeCAD-AI/0.3.0"}
+        headers = {"Accept": "application/json", "Content-Type": "application/json", "User-Agent": "IngeCAD-AI/0.3.2"}
         if self.protocol == "anthropic":
             headers.update({"x-api-key": self.key, "anthropic-version": "2023-06-01"})
         elif self.key:
@@ -52,14 +69,22 @@ class Provider:
                 raw = reply.read(16*1024*1024+1)
                 if len(raw) > 16*1024*1024:
                     raise ValueError("Provider response exceeds 16 MiB")
-                return json.loads(raw)
+                try:
+                    result = json.loads(raw)
+                except ValueError:
+                    raise RuntimeError("Provider returned invalid JSON") from None
+                if not isinstance(result, dict):
+                    message = error_message(result)
+                    if self.key:
+                        message = message.replace(self.key, "[redacted]")
+                    raise RuntimeError("Provider returned an unexpected response: " + message[:1200])
+                return result
         except urllib.error.HTTPError as exc:
             raw = exc.read(8192).decode("utf-8", errors="replace")
             if self.key:
                 raw = raw.replace(self.key, "[redacted]")
             try:
-                error = json.loads(raw).get("error", raw)
-                raw = error.get("message", str(error)) if isinstance(error, dict) else str(error)
+                raw = error_message(json.loads(raw))
             except ValueError:
                 pass
             raise RuntimeError(f"Provider HTTP {exc.code}: {raw[:1200]}") from None
@@ -68,12 +93,17 @@ class Provider:
 
     def models(self):
         data = self.request("/models")
-        models = sorted({str(e["id"]) for e in data.get("data", []) if e.get("id")})
+        entries = data.get("data", [])
+        if not isinstance(entries, list) or any(not isinstance(e, dict) for e in entries):
+            raise RuntimeError("Provider returned an invalid model list")
+        models = sorted({gemini_model(str(e["id"])) if self.name == "Google Gemini" else str(e["id"]) for e in entries if e.get("id")})
         if not models:
             raise ValueError("Provider returned no models; enter the model ID manually")
         return models
 
     def chat(self, model, messages, tools):
+        if self.name == "Google Gemini":
+            model = gemini_model(model)
         if self.protocol == "anthropic":
             payload = anthropic_payload(model, messages, tools)
             reply = self.request("/messages", payload)
@@ -100,8 +130,10 @@ class Provider:
         reply = self.request("/chat/completions", {"model": model, "messages": clean, "tools": tools, "stream": False})
         try:
             result = reply["choices"][0]["message"]
-        except (KeyError, IndexError):
+        except (KeyError, IndexError, TypeError):
             raise RuntimeError("Provider returned no assistant message") from None
+        if not isinstance(reply["choices"][0], dict) or not isinstance(result, dict):
+            raise RuntimeError("Provider returned an invalid assistant message")
         if reply["choices"][0].get("finish_reason") == "length":
             raise RuntimeError("Provider reached its response limit; no additional CAD calls were executed")
         if not result.get("content") and not result.get("tool_calls"):

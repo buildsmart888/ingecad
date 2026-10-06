@@ -185,7 +185,7 @@ class Bridge:
             "dirty": d.dirty, "space": d.space_name, "units": d.doc.units,
             "layouts": list(d.doc.layouts.names()), "can_undo": h.history.can_undo,
             "can_redo": h.history.can_redo, "busy": bool(getattr(h, "_open_thread", None)),
-            "heartbeat": time.time(), "bridge_version": "0.3.1"}
+            "heartbeat": time.time(), "bridge_version": "0.3.2"}
 
     def tick(self):
         if not self.ctx.host.plugins.is_active("ingecad_mcp"):
