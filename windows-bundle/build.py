@@ -130,9 +130,9 @@ with tempfile.TemporaryDirectory(prefix="ingecad-launcher-") as temp:
     subprocess.run([str(toolchain/"gcc.exe"), "-Os", "-s", "-municode", "-mwindows", "launcher.c", "launcher-res.o", "-o", "IngeCAD.exe"], cwd=temp, check=True)
     shutil.copy2(temp/"IngeCAD.exe", STAGE/"IngeCAD.exe")
 
-manifest = {"bundle_version":"0.3.1", "ingecad":"0.6.5", "ingecad_commit":"b58499c6ca1ce9c106b69bb29e8d6ffcb1e9676c", "python":"3.12.10", "libredwg":"0.14.8597 patched", "platform":"Windows x64", "files":{}}
+manifest = {"bundle_version":"0.3.2", "ingecad":"0.6.5", "ingecad_commit":"b58499c6ca1ce9c106b69bb29e8d6ffcb1e9676c", "python":"3.12.10", "libredwg":"0.14.8597 patched", "platform":"Windows x64", "files":{}}
 for p in sorted(STAGE.rglob("*")):
-    if p.is_file() and p.name not in {"bundle-manifest.json", "connection.json"} and "MCP-config" not in p.parts:
+    if p.is_file() and p.name not in {"bundle-manifest.json", "connection.json", "install-check.json"} and "MCP-config" not in p.parts:
         manifest["files"][p.relative_to(STAGE).as_posix()] = hashlib.sha256(p.read_bytes()).hexdigest()
 (STAGE/"bundle-manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
 print(json.dumps({"dependencies":len(selected), "files":len(manifest["files"]), "bytes":sum(p.stat().st_size for p in STAGE.rglob('*') if p.is_file())}))

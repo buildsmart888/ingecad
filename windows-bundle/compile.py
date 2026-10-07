@@ -25,4 +25,4 @@ with (root/"compile.log").open('w', encoding='utf-8') as log:
     result = subprocess.run([str(compiler), '-V3', '-WX', '-INPUTCHARSET', 'UTF8', str(root/"setup.nsi")], cwd=root, stdout=log, stderr=subprocess.STDOUT)
 if result.returncode:
     raise RuntimeError((root/"compile.log").read_text(encoding='utf-8',errors='replace')[-7000:])
-print(root/"dist"/"IngeCAD-AI-Setup-0.6.5-0.3.1-x64.exe")
+print(root/"dist"/"IngeCAD-AI-Setup-0.6.5-0.3.2-x64.exe")

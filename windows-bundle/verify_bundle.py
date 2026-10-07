@@ -1,5 +1,6 @@
 """Use the bundled interpreter to exercise GUI/CAD and a real bundled stdio server."""
 import asyncio
+import hashlib
 import json
 import os
 import site
@@ -72,6 +73,10 @@ async def verify():
                 assert value.get("ok", True), (name, value)
                 return value
             status = await cad("get_status", {})
+            manifest = json.loads((root/"bundle-manifest.json").read_text(encoding="utf-8"))
+            assert status["bridge_version"] == manifest["bundle_version"]
+            provider_path = "plugins/ingecad_mcp/providers.py"
+            assert hashlib.sha256((root/provider_path).read_bytes()).hexdigest() == manifest["files"][provider_path]
             await cad("create_text_style", {"name":"BUNDLE_THAI"})
             await cad("create_entities", {"entities":[
                 {"type":"LINE", "start":[0,0], "end":[8000,0]},

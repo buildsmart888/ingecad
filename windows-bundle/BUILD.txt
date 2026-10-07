@@ -1,7 +1,7 @@
 Build project for IngeCAD AI Bundle (GPL-3.0-or-later)
 
 This builder uses the verified local IngeCAD 0.6.5 source installation and the
-ingecad-mcp 0.3.1 workspace as its inputs. It never copies a venv wholesale.
+ingecad-mcp 0.3.2 workspace as its inputs. It never copies a venv wholesale.
 Dependencies are selected from distribution metadata, including requested extras,
 and copied from RECORD allowlists into an application-local embeddable runtime.
 
@@ -23,7 +23,7 @@ The installer creates only per-user shortcuts and its own uninstall registration
 It does not change global PATH, file defaults or existing AI client configuration.
 
 QA:
-  powershell.exe -NoProfile -ExecutionPolicy Bypass -File windows-bundle\verify_install.ps1 -Installer windows-bundle\dist\IngeCAD-AI-Setup-0.6.5-0.3.1-x64.exe -Target "<absolute path inside windows-bundle\test-installed\new-folder>"
+  powershell.exe -NoProfile -ExecutionPolicy Bypass -File windows-bundle\verify_install.ps1 -Installer windows-bundle\dist\IngeCAD-AI-Setup-0.6.5-0.3.2-x64.exe -Target "<absolute path inside windows-bundle\test-installed\new-folder>"
 Each QA run requires a new target folder. It uses a separate Test shortcut name,
 uninstall registry key, Qt INI settings and MCP IPC root. It exercises real Qt,
 19 stdio MCP tools, Thai-path DWG roundtrip, A3/PDF and safe uninstall.

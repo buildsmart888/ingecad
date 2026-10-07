@@ -2,18 +2,18 @@
 
 ## Windows AI + MCP bundle (community fork)
 
-**[AI/MCP 0.3.2 hotfix](https://github.com/buildsmart888/ingecad/releases/tag/v0.6.5-ai-mcp-0.3.2)**:
-after installing the 0.3.1 Windows bundle below, close IngeCAD and apply this small update.
-It fixes array-shaped provider errors hiding their original HTTP status/message and normalizes
-Gemini model IDs by removing the `models/` prefix. Existing drawings, keys and connection paths remain in place.
-
 This fork adds a Windows x64 offline installer with IngeCAD 0.6.5, an application-local
-Python runtime, patched LibreDWG converters, and IngeCAD AI + MCP 0.3.1.
+Python runtime, patched LibreDWG converters, and IngeCAD AI + MCP 0.3.2.
 It creates per-user Desktop/Start Menu shortcuts and machine-specific MCP setup examples.
 
-**[Download the Windows installer](https://github.com/buildsmart888/ingecad/releases/tag/v0.6.5-ai-mcp-0.3.1)** ·
+**[Download the full Windows 0.3.2 installer](https://github.com/buildsmart888/ingecad/releases/tag/v0.6.5-ai-mcp-0.3.2)** ·
 [Thai installation guide](windows-bundle/README-TH.txt) · [AI/MCP documentation](ingecad-mcp/README.md) ·
 [Build instructions](windows-bundle/BUILD.txt)
+
+New installations can use the full 0.3.2 setup directly. Existing 0.3.1 installations
+can use the small 0.3.2 hotfix from the same release after closing IngeCAD and its MCP client.
+This version fixes array-shaped provider errors hiding the original HTTP status/message
+and normalizes Gemini model IDs by removing the `models/` prefix.
 
 The native AI sidebar includes seven provider presets, protected key storage, model discovery,
 connection testing, chat/photo/viewport inputs, CAD tool calls and a copyable MCP setup guide.

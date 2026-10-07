@@ -5,16 +5,16 @@ Unicode true
 !include "WinVer.nsh"
 !include "FileFunc.nsh"
 Name "IngeCAD AI Bundle"
-OutFile "dist\IngeCAD-AI-Setup-0.6.5-0.3.1-x64.exe"
+OutFile "dist\IngeCAD-AI-Setup-0.6.5-0.3.2-x64.exe"
 InstallDir "$LOCALAPPDATA\Programs\IngeCAD-AI"
 RequestExecutionLevel user
 SetCompressor zlib
 ShowInstDetails show
 ShowUninstDetails show
-VIProductVersion "0.6.5.31"
+VIProductVersion "0.6.5.32"
 VIAddVersionKey "ProductName" "IngeCAD AI Bundle"
-VIAddVersionKey "FileDescription" "IngeCAD 0.6.5 + Python + LibreDWG + AI/MCP 0.3.1 offline setup"
-VIAddVersionKey "FileVersion" "0.6.5.31"
+VIAddVersionKey "FileDescription" "IngeCAD 0.6.5 + Python + LibreDWG + AI/MCP 0.3.2 offline setup"
+VIAddVersionKey "FileVersion" "0.6.5.32"
 VIAddVersionKey "LegalCopyright" "IngeCAD contributors; see installed licenses"
 !define MUI_ABORTWARNING
 !insertmacro MUI_PAGE_WELCOME
@@ -72,7 +72,7 @@ folder_ok:
   CreateShortcut "$SMPROGRAMS\$Brand\Installation guide.lnk" "$INSTDIR\README-TH.txt"
   CreateShortcut "$SMPROGRAMS\$Brand\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\$Brand" "DisplayName" "$Brand"
-  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\$Brand" "DisplayVersion" "0.6.5 + AI/MCP 0.3.1"
+  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\$Brand" "DisplayVersion" "0.6.5 + AI/MCP 0.3.2"
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\$Brand" "InstallLocation" "$INSTDIR"
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\$Brand" "DisplayIcon" "$INSTDIR\IngeCAD.exe"
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\$Brand" "UninstallString" '"$INSTDIR\Uninstall.exe"'

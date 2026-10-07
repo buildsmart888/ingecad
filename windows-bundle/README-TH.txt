@@ -1,15 +1,15 @@
-IngeCAD AI Bundle — Windows x64 — 0.6.5 + AI/MCP 0.3.1
+IngeCAD AI Bundle — Windows x64 — 0.6.5 + AI/MCP 0.3.2
 
 ชุดติดตั้ง Windows ที่จัดทำจาก IngeCAD source ไม่ใช่ตัวติดตั้ง Windows ทางการของผู้พัฒนา IngeCAD
 รองรับเป้าหมาย Windows 10/11 64-bit มีกราฟิกที่รองรับ OpenGL
 
-ติดตั้ง: เปิด IngeCAD-AI-Setup-0.6.5-0.3.1-x64.exe แล้วเลือกโฟลเดอร์
+ติดตั้ง: เปิด IngeCAD-AI-Setup-0.6.5-0.3.2-x64.exe แล้วเลือกโฟลเดอร์
 ค่าเริ่มต้น: %LOCALAPPDATA%\Programs\IngeCAD-AI
 ติดตั้งสำหรับบัญชีผู้ใช้ปัจจุบัน ไม่ต้องติดตั้ง Python แยก ไม่ต้องใช้อินเทอร์เน็ตขณะติดตั้ง
 มี Shortcut ที่ Desktop และ Start Menu และรายการถอนการติดตั้งใน Windows Apps
 
 รวม IngeCAD 0.6.5, Python 3.12.10 embeddable, ไลบรารี Python/Qt,
-LibreDWG 0.14.8597 ที่มีแพตช์ IngeCAD และ AI/MCP 0.3.1 พร้อมคู่มือในแท็บ AI
+LibreDWG 0.14.8597 ที่มีแพตช์ IngeCAD และ AI/MCP 0.3.2 พร้อมคู่มือในแท็บ AI
 Python และตัวแปลง DWG อยู่ภายในโฟลเดอร์โปรแกรม เส้นทางตั้งใหม่อัตโนมัติเมื่อเปิดโปรแกรม
 
 เริ่มใช้: เปิด Shortcut IngeCAD AI Bundle แล้วสร้าง/เปิดเอกสาร เข้าแท็บ AI
