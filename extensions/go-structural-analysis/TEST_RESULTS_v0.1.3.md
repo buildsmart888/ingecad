@@ -37,6 +37,11 @@ Not Tested ยังคงมี 3 รายการ: cold process restart, phy
 
 ## ผลสุดท้าย
 
+ผลปัจจุบันหลังเพิ่มตัวอย่างและปรับ Reaction/Moment ตรวจซ้ำจาก source ที่เพิ่มเข้า
+Git repository `extensions/go-structural-analysis` วันที่ 9 ตุลาคม 2026:
+**86 Passed / 0 Failed / 0 Not Tested**, pytest console 6.42 วินาที
+timestamp และเวลาจาก JUnit อยู่ใน XML และ JSON ปัจจุบัน
+
 ### Reaction แยกแกนและสัญลักษณ์ Moment — 9 ตุลาคม 2026
 
 - Rx และ Rz เป็นลูกศรอิสระตามแกน global X/Z โดยหัวอยู่ที่ Node และแสดงค่า/หน่วยแยก
@@ -82,15 +87,18 @@ Not Tested ยังคงมี 3 รายการ: cold process restart, phy
 และ [แกลเลอรีครบชุด](artifacts/examples-v0.1.3/index.html)
 สำรองก่อนเพิ่มตัวอย่างที่ `backups/examples-20261009-082539/`
 
-ตารางด้านล่างเป็นผลเดิมก่อนเพิ่ม catalogue; XML/JSON ปัจจุบันระบุ 74 tests
+ตารางสรุปปัจจุบัน (กลุ่มย่อยบางรายการรวมอยู่ใน pytest และไม่ให้นับซ้ำ):
 
 | กลุ่ม | Passed | Failed | Not Tested |
 |---|---:|---:|---:|
-| pytest ทั้งหมด | 52 | 0 | 0 |
-| Regression เดิม (รวมอยู่ใน 52) | 19 | 0 | 0 |
+| pytest ทั้งหมด | 86 | 0 | 0 |
+| Regression เดิม (รวมอยู่ใน 86) | 19 | 0 | 0 |
 | เปรียบเทียบค่าทางวิศวกรรมจริงใน JSON | 198 | 0 | 0 |
 | Live integration checks | 20 | 0 | 0 |
-| Source/installed Python file hash verification | 11 | 0 | 0 |
+| Live audit รอบ 9 ต.ค. (รวม capture checks) | 28 | 0 | 0 |
+| ตัวอย่างผ่านปุ่ม UI (รวมคืน original model 1 check) | 22 | 0 | 0 |
+| Visual capture checks (รวมคืน workspace 1 check) | 34 | 0 | 0 |
+| Source/installed Python file hash verification | 13 | 0 | 0 |
 | การตรวจสภาพแวดล้อมเพิ่มเติมด้านล่าง | 0 | 0 | 3 |
 
 การเปรียบเทียบ 198 ค่าเป็น Assertions ภายใน Tests ไม่ใช่ 198 Test Cases เพิ่มเติม
@@ -99,11 +107,17 @@ Not Tested ยังคงมี 3 รายการ: cold process restart, phy
 [engineering-checks.json](artifacts/v0.1.3/engineering-checks.json),
 [live-tests.json](artifacts/v0.1.3/live-tests.json)
 
+Live checks รอบใหม่: [audit](artifacts/audit-20261009/live-tests.json),
+[examples](artifacts/examples-v0.1.3/live-results.json),
+[Reaction/Moment/diagram captures](artifacts/visual-update/live-results.json)
+Capture Passed หมายถึงบันทึกภาพได้; การตรวจภาพจริงรายงานในแต่ละหัวข้อข้างบน
+ตัวอย่าง Stability สองรายการ Passed เมื่อ solver ปฏิเสธโครงสร้างไม่เสถียรตามคาด
+
 คำสั่งที่รันจริง:
 
 ```powershell
 .venv\Scripts\python.exe -m pytest tests -q --junitxml=artifacts\v0.1.3\pytest.xml
-# 52 passed in 5.60s
+# ผลล่าสุดจาก repository: 86 passed in 6.42s
 .\install.ps1 -SkipDependencies
 .venv\Scripts\python.exe tests\build_report_v013.py
 ```
@@ -118,7 +132,7 @@ Not Tested ยังคงมี 3 รายการ: cold process restart, phy
   `%LOCALAPPDATA%\GO Structural Analysis\solver-v0.1\Scripts\python.exe`
   ใช้ runtime เดิมต่อ แม้ชื่อ directory จะยังเป็น `solver-v0.1`
 - Plugin ติดตั้งที่ `%APPDATA%\ingetrazo\plugins\go_structural_analysis`
-  Python ทั้ง 11 ไฟล์ตรงกับ Source ด้วย SHA256
+  Python ทั้ง 13 ไฟล์ตรงกับ Source ด้วย SHA256 ในการตรวจหลังติดตั้งล่าสุด
 - ตรวจ `core.extensions.discover_plugins` ใน host จริง: พบ GO plugin ไม่มี PluginError;
   เรียก setup กับ ExtensionApp v2 จริงได้ และการเรียกซ้ำไม่สร้าง Panel ซ้ำ
 - API v1 ถูกปฏิเสธด้วยข้อความชัดเจน
