@@ -25,6 +25,11 @@
     "sha256": "a7f5a7bec17409efd974df20505760351989b935eeb621079ab1f358cd553514"
   },
   {
+    "file": "go_structural_analysis/materials.py",
+    "change": "Added",
+    "sha256": "dedf7e64fb5d9a90e62033b952945df81d5b84b848ab3acae7ee3f70f1ee20c6"
+  },
+  {
     "file": "go_structural_analysis/model.py",
     "change": "Modified",
     "sha256": "092dd8b59eb4a3efb23e9dac31731eea5cfda56191bc2962f54e72f3f46cc52f"
@@ -42,7 +47,7 @@
   {
     "file": "go_structural_analysis/ui.py",
     "change": "Modified",
-    "sha256": "50e179df8a0da6f9028313b6c0d2bc97dacc1057e262456092f76c1cbb50f1b1"
+    "sha256": "41a389fad8fdaa2dd360b00098cf1742c00c26c2dc48c2db6a7ad632ecbf02f3"
   },
   {
     "file": "go_structural_analysis/visualization.py",
@@ -62,7 +67,7 @@
   {
     "file": "tests/build_report_v013.py",
     "change": "Added",
-    "sha256": "570bf8c4dbeaefa340dee021acc4202cbeaacce2603df82cbf1a231c3fd5a2a2"
+    "sha256": "0d7a3e8f57b46b304031d891123ce1be84c32ed04fb8cba2dc72a904f9c8b856"
   },
   {
     "file": "tests/build_visual_fixtures.py",
@@ -80,6 +85,11 @@
     "sha256": "79905cb33f9e4974f32645f5a07b2fe8255d0cc1d6e8a7bce8cbfe632adaf2bd"
   },
   {
+    "file": "tests/live_materials.py",
+    "change": "Added",
+    "sha256": "33f6a8f023628cb197c1e6c80f4f185b1829fab590f7a5fa96d6c17ff6a72302"
+  },
+  {
     "file": "tests/live_visuals.py",
     "change": "Added",
     "sha256": "79eb099ba982946f1cb9df6e5cd2f6b2f6b2eda40cf322c336bc85d4a871a9d6"
@@ -87,7 +97,7 @@
   {
     "file": "tests/package_v013.py",
     "change": "Added",
-    "sha256": "b70c4ea8a6c09a6b1ddf38fca259f3496112f027a5beec5f1fa9a99f3b527920"
+    "sha256": "6d79e25556442438871bca873d21f77f14a6a4c748afc86b0adf51529a4c36a9"
   },
   {
     "file": "tests/reference_frame.py",
@@ -115,6 +125,11 @@
     "sha256": "cb03df7e6db6e9e70b7187b7f8be4260820d4e324493a8f7b8a90c9500f48dcd"
   },
   {
+    "file": "tests/test_materials.py",
+    "change": "Added",
+    "sha256": "87589a122a58c2cd326cbfb9fc9553b1c00feb1df3daa676981a7e7d4e5cae9e"
+  },
+  {
     "file": "install.ps1",
     "change": "Modified",
     "sha256": "338aae375ac30546bfb8085aaa38045c42186ce2cde4bc9dcc7ab39d094bdefb"
@@ -122,17 +137,17 @@
   {
     "file": "README.md",
     "change": "Modified",
-    "sha256": "d27a7f7e5a4ffa3f1dec9aa5403ef4d59891298dbea2f5c8449b62d1aafd9dbb"
+    "sha256": "b89eb693ab9136e0cb2e21c17aeed995a684415fc72d09e13042fcca0bd9d466"
   },
   {
     "file": "TEST_RESULTS_v0.1.3.md",
     "change": "Added",
-    "sha256": "3a78f7ff5a3e0c139c4d35c8d3da7c770456b21c6793cbf637ef6d26c06b9db7"
+    "sha256": "7786aceff58fd89c676844251b31a4b71d3d34b3c6618058b28fb9109982675f"
   },
   {
     "file": "ROADMAP.md",
     "change": "Added",
-    "sha256": "761c7d4af993b9ef787fb81e96759ada885f08880877ba525130cdc3a4217527"
+    "sha256": "3c13b7bc669250348ea4dc8575a3591c4f0c9af84a0d529c5c3c04e78d0c73f7"
   },
   {
     "file": "EXAMPLES.md",

@@ -7,7 +7,7 @@ and source/plugin backups are retained; the host core and Program Files are unch
 |---|---|---|
 | v0.1.1 Engineering visualization | Support/release/load symbols, N/V/M/D, deformation, scales, labels, legend, world projection | Live viewport captures, camera transform and picking checks |
 | v0.1.2 Result inspector | Member selection, exact x/L with left/right values, four tables, five CSV files, stale results | Automated evaluation/CSV tests and live viewport/editor/save/load/history checks |
-| v0.1.3 Solver verification | Segment polynomial extrema, reference benchmarks, sparse LU stability and equilibrium guards, cases/self-weight | 86 pytest cases, original 19 regression cases included, actual reference comparisons in JSON |
+| v0.1.3 Solver verification | Segment polynomial extrema, reference benchmarks, sparse LU stability and equilibrium guards, cases/self-weight, material presets | 90 pytest cases, original 19 regression cases included, actual reference comparisons in JSON |
 
 See `TEST_RESULTS_v0.1.3.md` for Passed / Failed / Not Tested and remaining
 environment checks. Cold process restart, physical mouse input and an actual

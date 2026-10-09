@@ -13,6 +13,7 @@ def main():
     files += [p for p in sorted((ROOT/'artifacts'/'examples-v0.1.3').rglob('*')) if p.is_file()]
     files.append(ROOT/'EXAMPLES.md')
     files += [p for p in sorted((ROOT/'artifacts'/'visual-update').rglob('*')) if p.is_file()]
+    files += [p for p in sorted((ROOT/'artifacts'/'materials').rglob('*')) if p.is_file()]
     files.append(ROOT/'artifacts'/'regression-before-v0.1.3.xml')
     output=ROOT/'dist'/'GO-Structural-Analysis-v0.1.3.zip'; output.parent.mkdir(exist_ok=True)
     with ZipFile(output,'w',ZIP_DEFLATED) as archive:

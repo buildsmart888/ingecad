@@ -37,6 +37,19 @@ Not Tested ยังคงมี 3 รายการ: cold process restart, phy
 
 ## ผลสุดท้าย
 
+### Material presets — 9 ตุลาคม 2026
+
+เพิ่ม Concrete / Aluminium / Wood ผ่าน Add preset ใน Materials และเลือกวัสดุใน Members
+ค่าเริ่มต้นแก้ไขได้ ไม่ใช่ค่า strength/design check; rho เป็นน้ำหนัก kN/m³
+Wood ใช้ stiffness ตามแนวเสี้ยน ไม่ใช่ orthotropic model เต็มรูปแบบ
+pytest ล่าสุด **90 Passed / 0 Failed / 0 Not Tested**, 6.63 วินาที
+ทดสอบ deflection แปรตาม 1/E และ self-weight ของทั้งสามวัสดุเทียบสมการ
+Live editor **8 Passed / 0 Failed**: เพิ่มวัสดุ, ไม่เพิ่มซ้ำหรือเขียนทับค่าที่แก้,
+Member dropdown, validation, legacy round-trip, รักษา document เดิม
+[ภาพ Materials](artifacts/materials/materials-editor.png),
+[live-results.json](artifacts/materials/live-results.json)
+ตารางสรุปด้านล่างอัปเดตเป็น 90 รายการ; เวลารอบก่อนเก็บไว้ตามลำดับการตรวจ
+
 ผลปัจจุบันหลังเพิ่มตัวอย่างและปรับ Reaction/Moment ตรวจซ้ำจาก source ที่เพิ่มเข้า
 Git repository `extensions/go-structural-analysis` วันที่ 9 ตุลาคม 2026:
 **86 Passed / 0 Failed / 0 Not Tested**, pytest console 6.42 วินาที
@@ -91,14 +104,15 @@ timestamp และเวลาจาก JUnit อยู่ใน XML และ 
 
 | กลุ่ม | Passed | Failed | Not Tested |
 |---|---:|---:|---:|
-| pytest ทั้งหมด | 86 | 0 | 0 |
-| Regression เดิม (รวมอยู่ใน 86) | 19 | 0 | 0 |
+| pytest ทั้งหมด | 90 | 0 | 0 |
+| Regression เดิม (รวมอยู่ใน 90) | 19 | 0 | 0 |
 | เปรียบเทียบค่าทางวิศวกรรมจริงใน JSON | 198 | 0 | 0 |
 | Live integration checks | 20 | 0 | 0 |
 | Live audit รอบ 9 ต.ค. (รวม capture checks) | 28 | 0 | 0 |
 | ตัวอย่างผ่านปุ่ม UI (รวมคืน original model 1 check) | 22 | 0 | 0 |
 | Visual capture checks (รวมคืน workspace 1 check) | 34 | 0 | 0 |
-| Source/installed Python file hash verification | 13 | 0 | 0 |
+| Materials live editor checks | 8 | 0 | 0 |
+| Source/installed Python file hash verification | 14 | 0 | 0 |
 | การตรวจสภาพแวดล้อมเพิ่มเติมด้านล่าง | 0 | 0 | 3 |
 
 การเปรียบเทียบ 198 ค่าเป็น Assertions ภายใน Tests ไม่ใช่ 198 Test Cases เพิ่มเติม

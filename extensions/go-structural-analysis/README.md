@@ -4,6 +4,14 @@ Python extension for IngeTrazo Plugin API v2. Source lives outside Program Files
 
 ## Install and run
 
+For trial users, run **GO-Structural-Analysis-v0.1.3-Windows-x64-Setup.exe**.
+It includes the offline Python/PyNite solver; save your work and close IngeTrazo
+before Setup. Then open Extensions → GO Structural Analysis and choose an example.
+Start menu provides Quick Start, Example Gallery, Check Solver and Uninstall.
+IngeTrazo Plugin API v2 is required separately. See
+[installer tests](INSTALLER_TEST_RESULTS.md) for executed checks and known limitations.
+The PowerShell installer below remains available for development installs.
+
 Run `powershell -ExecutionPolicy Bypass -File .\install.ps1`. The installer creates
 an isolated Python 3.12 solver under `%LOCALAPPDATA%\GO Structural Analysis\solver-v0.1`
 and copies the plugin package to `%APPDATA%\ingetrazo\plugins\go_structural_analysis`.
@@ -51,6 +59,27 @@ the current model document), then enter the structural workspace. The plugin
 also displays its data in a current `.igz` without a workspace.
 
 ## Analysis conventions
+
+Materials editor → choose **Steel / Concrete / Aluminium / Wood** → **Add preset**.
+Members → material now has an editable selector using the current material IDs.
+Adding an existing preset selects its row and preserves edited properties.
+Presets are editable starting values, not design strengths or capacity checks.
+
+| Preset | E [kN/m²] | G [kN/m²] | nu | rho [kN/m³] |
+|---|---:|---:|---:|---:|
+| Concrete | 33,000,000 | 13,750,000 | 0.20 | 25 |
+| Aluminium | 70,000,000 | 26,923,076.923 | 0.30 | 26.477955 |
+| Wood | 11,000,000 | 690,000 | 0.42 | 4.118793 |
+
+Concrete starts with uncracked C30/37-like stiffness; adjust E for the project,
+grade and cracking. Aluminium is a generic elastic preset, not an alloy strength.
+Wood uses C24-like longitudinal stiffness along each member; G is supplied
+independently, and this scalar material interface does not model full orthotropy.
+For aluminium/wood, mass density is converted by rho_weight = rho_mass × 9.80665/1000.
+Reference values: [concrete research, Ecm table](https://kth.diva-portal.org/smash/get/diva2%3A1972893/FULLTEXT01.pdf),
+[aluminium elastic parameters](https://upcommons.upc.edu/bitstreams/cf2ed9c5-c107-450d-8956-0257ee941b42/download),
+[timber research, C24 E/G/nu/density](https://pure.au.dk/portal/files/279530292/1_s2.0_S0003682X21001109_main.pdf).
+Concrete rho=25 and nu=0.20 are chosen starting assumptions for this preset.
 
 - Coordinates X/Z in metres, forces kN, moments kN·m, E/G kN/m², A m²,
   Iy/Iz/J m⁴, rho weight density kN/m³. Positive FZ upwards.

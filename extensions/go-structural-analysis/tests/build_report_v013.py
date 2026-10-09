@@ -44,6 +44,10 @@ def main():
         visuals=json.loads(visual_path.read_text(encoding='utf-8'))
         report['visual_update']={'evidence':str(visual_path.relative_to(ROOT)),
             'counts':{s:sum(v.get('status')==s for v in visuals) for s in ['Passed','Failed','Not Tested']},'checks':visuals}
+    material_path=ROOT/'artifacts'/'materials'/'live-results.json'
+    if material_path.is_file():
+        materials=json.loads(material_path.read_text(encoding='utf-8'))
+        report['materials']={'counts':{s:sum(v.get('status')==s for v in materials) for s in ['Passed','Failed','Not Tested']},'checks':materials}
     (OUT/'test-results.json').write_text(json.dumps(report,indent=2,ensure_ascii=False),encoding='utf-8')
     paths=[*sorted((ROOT/'go_structural_analysis').glob('*.py')),*sorted((ROOT/'tests').glob('*.py')),ROOT/'install.ps1',ROOT/'README.md',ROOT/'TEST_RESULTS_v0.1.3.md',ROOT/'ROADMAP.md']
     paths.append(ROOT/'EXAMPLES.md')

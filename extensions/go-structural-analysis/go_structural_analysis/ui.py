@@ -16,6 +16,7 @@ from .results import VERSION,is_current
 from .inspector import Inspector
 from . import visualization
 from .examples import CATALOG, example as example_model
+from .materials import PRESETS, NOTES, material_preset
 
 KEY='go_structural_analysis'
 FIELDS={
@@ -37,11 +38,18 @@ class Editor(ThemeAware,QDialog):
             page=QWidget(); layout=QVBoxLayout(page); table=QTableWidget(0,len(fields)); table.setHorizontalHeaderLabels(fields)
             table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.ResizeToContents)
             self.tables[key]=table; layout.addWidget(table)
+            if key=='materials':
+                presets=QHBoxLayout(); self.material_presets=QComboBox(); self.material_presets.addItems(PRESETS)
+                self.add_material_button=QPushButton('Add preset'); presets.addWidget(self.material_presets); presets.addWidget(self.add_material_button); layout.addLayout(presets)
+                self.material_note=QLabel(NOTES['Steel']+' E/G: kN/m²; rho: kN/m³.'); self.material_note.setWordWrap(True); layout.addWidget(self.material_note)
+                self.material_presets.currentTextChanged.connect(lambda name:self.material_note.setText(NOTES[name]+' E/G: kN/m²; rho: kN/m³.'))
+                self.add_material_button.clicked.connect(self.add_material_preset)
             for row in data.get(key,[]): self.add_row(key,row)
             buttons=QHBoxLayout(); add=QPushButton('Add'); remove=QPushButton('Delete selected'); buttons.addWidget(add); buttons.addWidget(remove); layout.addLayout(buttons)
             add.clicked.connect(lambda _=False,k=key:self.add_row(k,{}))
             remove.clicked.connect(lambda _=False,t=table:self.remove_rows(t))
             tabs.addTab(page,key.replace('_',' ').title())
+        self.tables['materials'].itemChanged.connect(lambda _=None:self.refresh_material_choices())
         self.cases=QPlainTextEdit('\n'.join(data['cases'])); self.cases.setMaximumHeight(65); box.addWidget(QLabel('Load cases (one per line)')); box.addWidget(self.cases)
         self.weight=QCheckBox('Self-weight in every case (rho in kN/m³)'); self.weight.setChecked(data.get('self_weight',False)); box.addWidget(self.weight)
         self.error=QLabel(); self.error.setWordWrap(True); box.addWidget(self.error)
@@ -50,11 +58,25 @@ class Editor(ThemeAware,QDialog):
     def add_row(self,key,row):
         t=self.tables[key]; i=t.rowCount(); t.insertRow(i)
         for j,k in enumerate(FIELDS[key]):
-            if k in CHOICES:
+            if k=='material':
+                w=QComboBox(); w.setEditable(True); w.addItems([m['id'] for m in self.data['materials']]); w.setCurrentText(str(row.get(k,self.data['materials'][0]['id']))); t.setCellWidget(i,j,w)
+            elif k in CHOICES:
                 w=QComboBox(); w.addItems(CHOICES[k]); w.setCurrentText(str(row.get(k,CHOICES[k][0]))); t.setCellWidget(i,j,w)
             else: t.setItem(i,j,QTableWidgetItem(str(row[k]) if k in row else ''))
     def remove_rows(self,t):
         for i in sorted({v.row() for v in t.selectedIndexes()},reverse=True): t.removeRow(i)
+        if t is self.tables['materials']: self.refresh_material_choices()
+    def refresh_material_choices(self):
+        table=self.tables['materials']; ids=[table.item(i,0).text().strip() for i in range(table.rowCount()) if table.item(i,0) and table.item(i,0).text().strip()]
+        members=self.tables['members']; column=FIELDS['members'].index('material')
+        for i in range(members.rowCount()):
+            combo=members.cellWidget(i,column); old=combo.currentText(); combo.blockSignals(True); combo.clear(); combo.addItems(ids); combo.setCurrentText(old); combo.blockSignals(False)
+    def add_material_preset(self):
+        name=self.material_presets.currentText(); table=self.tables['materials']
+        for i in range(table.rowCount()):
+            if table.item(i,0) and table.item(i,0).text().strip()==name:
+                table.selectRow(i); self.material_note.setText(name+' already exists; its edited values are preserved.'); return
+        self.add_row('materials',material_preset(name)); self.refresh_material_choices(); table.selectRow(table.rowCount()-1)
     def accept_model(self):
         try:
             d={'schema':1,'self_weight':self.weight.isChecked(),'cases':[c.strip() for c in self.cases.toPlainText().splitlines() if c.strip()]}
