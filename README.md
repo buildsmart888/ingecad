@@ -341,6 +341,16 @@ association on Linux:
 ./scripts/install-desktop.sh   # then log out/in once
 ```
 
+## GO Structural Analysis for IngeTrazo
+
+The [GO Structural Analysis v0.1.3 extension](extensions/go-structural-analysis/README.md)
+provides 2D beam, frame and truss analysis through an isolated PyNiteFEA worker.
+It targets **IngeTrazo Plugin API v2** and has its own installer; it is distributed
+here as a companion extension. Includes 21 editable examples, viewport diagrams,
+result inspection, separate reaction arrows and moment symbols, and verification
+evidence. See the [example gallery](extensions/go-structural-analysis/EXAMPLES.md)
+and [test results](extensions/go-structural-analysis/TEST_RESULTS_v0.1.3.md).
+
 ## License
 
 GPL-3.0-or-later. Copyright (C) 2026 Marco Sumari Tellez and IngeCAD
